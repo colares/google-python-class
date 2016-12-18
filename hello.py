@@ -1,11 +1,12 @@
 #!/usr/bin/python -tt
 # coding=UTF-8
 
+# importa uma série de interfaces do sistema operacional
 import sys
 
 # Define a main() function that prints a little greeting
 def main():
-	print "Hello"
+	print sys.argv # imprimirá uma lista python com inputs da chamada
 
 '''This is the standard boilerplate that calls the main() function.
 # Caso voce execute o programa usando python ou ./, esse if e true e o main e excutado
