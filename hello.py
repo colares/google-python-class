@@ -4,9 +4,13 @@
 # importa uma série de interfaces do sistema operacional
 import sys
 
+def Hello(name):
+	name = name + '!!!!'
+	print 'Hello', name
+
 # Define a main() function that prints a little greeting
 def main():
-	print sys.argv # imprimirá uma lista python com inputs da chamada
+	Hello(sys.argv[1])
 
 '''This is the standard boilerplate that calls the main() function.
 # Caso voce execute o programa usando python ou ./, esse if e true e o main e excutado
