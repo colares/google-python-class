@@ -5,6 +5,11 @@
 import sys
 
 def Hello(name):
+	if name == 'Joston' or name == 'Muriel':
+		print 'Alert: Joston Mode'
+		name = name + '????'
+	else:
+		DoesNotExist(name)	
 	name = name + '!!!!'
 	print 'Hello', name # o print interpreta essa vírgula para colocar um espaço
 
