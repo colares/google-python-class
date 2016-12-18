@@ -1,12 +1,16 @@
 #!/usr/bin/python -tt
 # coding=UTF-8
 
+#-t
+# Issue a warning when a source file mixes tabs and spaces for indentation in a way that makes it depend on the worth of
+# a tab expressed in spaces. Issue an error when the option is given twice (-tt).
+
 # importa uma série de interfaces do sistema operacional
 import sys
 
 def Hello(name):
 	if name == 'Joston' or name == 'Muriel':
-		print 'Alert: Joston Mode'
+                print 'Alert: Joston Mode'
 		name = name + '????'
 	else:
 		DoesNotExist(name)	
