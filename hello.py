@@ -6,7 +6,7 @@ import sys
 
 def Hello(name):
 	name = name + '!!!!'
-	print 'Hello', name
+	print 'Hello', name # o print interpreta essa vírgula para colocar um espaço
 
 # Define a main() function that prints a little greeting
 def main():
