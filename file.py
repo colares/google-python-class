@@ -5,8 +5,8 @@ import sys
 
 def Cat(filename):
 	f = open(filename, 'rU')
-	lines = f.readlines()
-	print lines
+	text = f.read()
+	print text,
 	f.close() # se vc omite, ele fecha quando o processo termina
 
 # r The mode can be 'r', 'w' or 'a' for reading (default),\nwriting or appending. 

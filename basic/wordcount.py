@@ -38,6 +38,39 @@ print_words() and print_top().
 """
 
 import sys
+'''
+def Cat(filename):
+        f = open(filename, 'rU')
+        text = f.read()
+        print text,
+        f.close() # se vc omite, ele fecha quando o processo termina
+'''
+
+def get_words(filename):
+  dictionary = {}
+  f = open(filename, 'rU')
+  words = f.read().replace('\n', ' ').split()
+  f.close() #não precisa, mas faço
+  for word in words:
+    if word in dictionary:
+      dictionary[word.lower()] += 1
+    else:
+      dictionary[word.lower()] = 1
+  return sorted(dictionary.items(), key=get_key, reverse=True)
+
+def get_key(item):
+  return item[1]
+
+def print_words(filename):
+  words = get_words(filename)
+  for word in words:
+    print word[0], word[1]
+
+
+def print_top(filename):
+  words = get_words(filename)
+  for word in words[:20]:
+    print word[0], word[1]
 
 # +++your code here+++
 # Define print_words(filename) and print_top(filename) functions.
