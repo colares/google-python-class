@@ -33,12 +33,36 @@ Suggested milestones for incremental development:
  -Build the [year, 'name rank', ... ] list and print it
  -Fix main() to use the extract_names list
 """
+def fetch_year(text):
+  match_year = re.search('<h3 align="center">[\w\s]*(\d\d\d\d)</h3>', text) 
+  year = 0
+  if match_year:
+    year = match_year.group(1)
+  return year
+
+def fetch_names(text):
+  raw_names = re.findall('<tr align="right"><td>(\d*)</td><td>(\w*)</td><td>(\w*)</td>', text)
+  dic_names = {}
+  for line in raw_names:
+    dic_names[line[1]] = line[0]
+    dic_names[line[2]] = line[0]
+    if line[1] == line[2]:
+      print '==', line[1]
+  return dic_names
+
 def extract_names(filename):
   # Add a 'U' to mode to open the file for input with universal newline\nsupport
   f = open(filename, 'rU')
   text = f.read()
-  print text,
   f.close() # se vc omite, ele fecha quando o processo termina
+ 
+  year = fetch_year(text)
+  names = fetch_names(text)
+
+  #result
+  print year
+  #for name in sorted(names.keys()): print name,names[name]
+
   """
   Given a file name for baby.html, returns a list starting with the year string
   followed by the name-rank strings in alphabetical order.
