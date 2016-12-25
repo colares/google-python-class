@@ -33,8 +33,12 @@ Suggested milestones for incremental development:
  -Build the [year, 'name rank', ... ] list and print it
  -Fix main() to use the extract_names list
 """
-
 def extract_names(filename):
+  # Add a 'U' to mode to open the file for input with universal newline\nsupport
+  f = open(filename, 'rU')
+  text = f.read()
+  print text,
+  f.close() # se vc omite, ele fecha quando o processo termina
   """
   Given a file name for baby.html, returns a list starting with the year string
   followed by the name-rank strings in alphabetical order.
@@ -60,7 +64,8 @@ def main():
     summary = True
     del args[0]
 
-  # +++your code here+++
+  extract_names(args[0])
+ 
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
   
