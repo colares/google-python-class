@@ -7,6 +7,14 @@
 
 # importa uma série de interfaces do sistema operacional
 import sys
+import os
+
+def List(dir):
+  filenames = os.listdir(dir)
+  for filename in filenames:
+    path = os.path.join(dir, filename)
+    print path
+    print os.path.abspath(path)
 
 def Hello(name):
 	if name == 'Joston' or name == 'Muriel':
@@ -19,7 +27,7 @@ def Hello(name):
 
 # Define a main() function that prints a little greeting
 def main():
-	Hello(sys.argv[1])
+	List(sys.argv[1])
 
 '''This is the standard boilerplate that calls the main() function.
 # Caso voce execute o programa usando python ou ./, esse if e true e o main e excutado

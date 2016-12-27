@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# coding=UTF-8
 # Copyright 2010 Google Inc.
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -42,34 +43,30 @@ def fetch_year(text):
 
 def fetch_names(text):
   raw_names = re.findall('<tr align="right"><td>(\d*)</td><td>(\w*)</td><td>(\w*)</td>', text)
-  dic_names = {}
+  names = {}
   for line in raw_names:
-    dic_names[line[1]] = line[0]
-    dic_names[line[2]] = line[0]
-    if line[1] == line[2]:
-      print '==', line[1]
-  return dic_names
+    if line[1] not in names or int(names[line[1]]) > int(line[0]):
+      names[line[1]] = line[0]; 
+    if line[2] not in names or int(names[line[2]]) > int(line[0]):
+      names[line[2]] = line[0]; 
+  return names
 
 def extract_names(filename):
-  # Add a 'U' to mode to open the file for input with universal newline\nsupport
-  f = open(filename, 'rU')
-  text = f.read()
-  f.close() # se vc omite, ele fecha quando o processo termina
- 
-  year = fetch_year(text)
-  names = fetch_names(text)
-
-  #result
-  print year
-  #for name in sorted(names.keys()): print name,names[name]
-
   """
   Given a file name for baby.html, returns a list starting with the year string
   followed by the name-rank strings in alphabetical order.
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
-  # +++your code here+++
-  return
+  # add a 'U' to mode to open the file for input with universal newline\nsupport
+  f = open(filename, 'rU')
+  text = f.read()
+  f.close() # python close it anyway
+
+  result = [fetch_year(text)]
+  dic_names = fetch_names(text)
+  for name in sorted(dic_names.keys()): result.append(name + ' ' + dic_names[name])
+ 
+  return result
 
 
 def main():
@@ -88,7 +85,12 @@ def main():
     summary = True
     del args[0]
 
-  extract_names(args[0])
+  names = '\n'.join( extract_names( args[0] ) )
+  if summary:
+    f = open(args[0] + '.summary', 'w')
+    f.write( names )
+  else:
+    print names
  
   # For each filename, get the names, then either print the text output
   # or write it to a summary file
