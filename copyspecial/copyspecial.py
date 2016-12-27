@@ -59,6 +59,11 @@ def main():
     sys.exit(1)
 
   # +++your code here+++
+  if todir:
+    for full_filename in list(args[0]):
+      shutil.copy(full_filename, todir)
+    return
+    
   print '\n'.join( list(args[0]) )
   # Call your functions
   
