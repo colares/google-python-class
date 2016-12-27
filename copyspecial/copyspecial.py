@@ -63,7 +63,16 @@ def main():
     for full_filename in list(args[0]):
       shutil.copy(full_filename, todir)
     return
-    
+
+  if tozip:
+    full_filenames = ' '.join( list(args[0]) )
+    cmd = 'zip -j ' + tozip + ' ' + full_filenames
+    (status, output) =  commands.getstatusoutput(cmd)
+    if status:
+      print 'Error: ', status, output
+    return
+  
+  # default option 
   print '\n'.join( list(args[0]) )
   # Call your functions
   
