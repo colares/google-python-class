@@ -8,13 +8,25 @@
 # importa uma série de interfaces do sistema operacional
 import sys
 import os
+import commands
 
 def List(dir):
+  cmd = 'ls -l ' + dir
+  print 'about to  do this:', cmd
+  return
+  (status, output) = commands.getstatusoutput(cmd)
+  if status:
+    sys.stderr.write('there was an error:' + output)
+    sys.exit(1)
+  print output
+
+  '''
   filenames = os.listdir(dir)
   for filename in filenames:
     path = os.path.join(dir, filename)
     print path
     print os.path.abspath(path)
+  '''
 
 def Hello(name):
 	if name == 'Joston' or name == 'Muriel':

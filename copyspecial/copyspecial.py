@@ -15,6 +15,16 @@ import commands
 """Copy Special exercise
 """
 
+def list(dir):
+  filenames = os.listdir(dir)
+  result = []
+  for filename in filenames:
+    match = re.search('__\w*__', filename)
+    if match:
+      path = os.path.join(dir, filename)
+      result.append( os.path.abspath(path) )
+  return result
+
 # +++your code here+++
 # Write functions and modify main() to call them
 
@@ -49,6 +59,7 @@ def main():
     sys.exit(1)
 
   # +++your code here+++
+  print '\n'.join( list(args[0]) )
   # Call your functions
   
 if __name__ == "__main__":
