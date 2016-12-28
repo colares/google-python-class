@@ -10,6 +10,12 @@ import sys
 import os
 import commands
 
+def Cat(filename):
+  f = open(filename)
+  text = f.read()
+  print '---', filename
+  print text
+
 def List(dir):
   cmd = 'ls -l ' + dir
   print 'about to  do this:', cmd
@@ -39,7 +45,10 @@ def Hello(name):
 
 # Define a main() function that prints a little greeting
 def main():
-	List(sys.argv[1])
+  args = sys.argv[1:]
+  print args
+  for arg in args:
+    Cat(arg)
 
 '''This is the standard boilerplate that calls the main() function.
 # Caso voce execute o programa usando python ou ./, esse if e true e o main e excutado
