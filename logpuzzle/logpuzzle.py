@@ -29,7 +29,7 @@ def read_urls(filename):
   into
   https://developers.google.com/edu/python/images/puzzle/a-baaa.jpg
   """
-
+  # todo Resolver puzzle para place_code.google.com
   f = open(filename, 'rU')
   text = f.read()
   f.close()
