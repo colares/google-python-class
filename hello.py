@@ -11,10 +11,13 @@ import os
 import commands
 
 def Cat(filename):
-  f = open(filename)
-  text = f.read()
-  print '---', filename
-  print text
+  try:
+    f = open(filename)
+    text = f.read()
+    print '---', filename
+    print text
+  except IOError:
+    print 'IO Error', filename
 
 def List(dir):
   cmd = 'ls -l ' + dir

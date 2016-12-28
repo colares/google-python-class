@@ -24,7 +24,15 @@ def read_urls(filename):
   extracting the hostname from the filename itself.
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
-  # +++your code here+++
+
+  f = open(filename, 'rU')
+  text = f.read()
+  f.close()
+  imgs = re.findall('GET\s(.*\.jpg)', text)
+  dic_imgs = {}
+  for img in imgs: # não usei reduce porque não sei usar em python e não quis me adiantar
+    dic_imgs[img] = ''
+  return sorted(dic_imgs.keys())
   
 
 def download_images(img_urls, dest_dir):
@@ -51,6 +59,7 @@ def main():
     del args[0:2]
 
   img_urls = read_urls(args[0])
+  return
 
   if todir:
     download_images(img_urls, todir)
