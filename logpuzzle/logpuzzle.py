@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# coding=UTF-8
 # Copyright 2010 Google Inc.
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -23,17 +24,23 @@ def read_urls(filename):
   """Returns a list of the puzzle urls from the given log file,
   extracting the hostname from the filename itself.
   Screens out duplicate urls and returns the urls sorted into
-  increasing order."""
+  increasing order.
+  /edu/languages/google-python-class/images/puzzle/a-babb.jpg
+  into
+  https://developers.google.com/edu/python/images/puzzle/a-baaa.jpg
+  """
 
   f = open(filename, 'rU')
   text = f.read()
   f.close()
-  imgs = re.findall('GET\s(.*\.jpg)', text)
+  imgs = re.findall('\/images.*\.jpg', text)
   dic_imgs = {}
   for img in imgs: # não usei reduce porque não sei usar em python e não quis me adiantar
-    dic_imgs[img] = ''
+    dic_imgs['https://developers.google.com/edu/python' + img] = ''
   return sorted(dic_imgs.keys())
-  
+
+def create_index_content(filenames):
+  return '<html><body><img src="' + '"/><img src="'.join(filenames) + '"/></body></html>'
 
 def download_images(img_urls, dest_dir):
   """Given the urls already in the correct order, downloads
@@ -43,8 +50,20 @@ def download_images(img_urls, dest_dir):
   with an img tag to show each local image file.
   Creates the directory if necessary.
   """
-  # +++your code here+++
-  
+  try:
+    index = 0
+    filenames = []
+    for img_url in img_urls:
+      filename = 'img' + str(index) + '.jpg'
+      print 'Retrieving... ', img_url
+      urllib.urlretrieve(img_url, dest_dir + '/' + filename)
+      index += 1
+      filenames.append(filename)
+    index_file_content = create_index_content(filenames)
+    f = open(dest_dir + '/index.html', 'w')
+    f.write(index_file_content)
+  except IOError:
+    print "Não foi possível encontrar o arquivo ", img_url
 
 def main():
   args = sys.argv[1:]
@@ -59,8 +78,7 @@ def main():
     del args[0:2]
 
   img_urls = read_urls(args[0])
-  return
-
+  
   if todir:
     download_images(img_urls, todir)
   else:
