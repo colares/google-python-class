@@ -29,15 +29,30 @@ def read_urls(filename):
   into
   https://developers.google.com/edu/python/images/puzzle/a-baaa.jpg
   """
-  # todo Resolver puzzle para place_code.google.com
   f = open(filename, 'rU')
   text = f.read()
   f.close()
-  imgs = re.findall('\/images.*\.jpg', text)
-  dic_imgs = {}
-  for img in imgs: # não usei reduce porque não sei usar em python e não quis me adiantar
-    dic_imgs['https://developers.google.com/edu/python' + img] = ''
-  return sorted(dic_imgs.keys())
+  imgs = re.findall('\/images.*\/.*\.jpg', text)
+
+  unique_imgs = unique_list(imgs)
+  return sorted(unique_imgs, key=img_key)
+
+def unique_list(my_list):
+  unique_list = {}
+  for item in my_list:
+    # match = re.search('\/\w-(\w*)-.*', item)
+    # unique_id = match.group(1)
+    # match = re.search('\/\w-\w\w\w\w-(\w\w\w\w)\.jpg', item)
+    # unique_id = match.group(1)
+    unique_list['https://developers.google.com/edu/python' + item] = ''
+  return unique_list.keys()
+  
+def img_key(img):
+  match = re.search('-(\w+)-(\w+)\.\w+', img)
+  if match:
+    return match.group(2)
+  else:
+    return img
 
 def create_index_content(filenames):
   return '<html><body><img src="' + '"/><img src="'.join(filenames) + '"/></body></html>'
@@ -50,20 +65,19 @@ def download_images(img_urls, dest_dir):
   with an img tag to show each local image file.
   Creates the directory if necessary.
   """
-  try:
-    index = 0
-    filenames = []
-    for img_url in img_urls:
-      filename = 'img' + str(index) + '.jpg'
-      print 'Retrieving... ', img_url
-      urllib.urlretrieve(img_url, dest_dir + '/' + filename)
-      index += 1
-      filenames.append(filename)
-    index_file_content = create_index_content(filenames)
-    f = open(dest_dir + '/index.html', 'w')
-    f.write(index_file_content)
-  except IOError:
-    print "Não foi possível encontrar o arquivo ", img_url
+  
+  index = 0
+  filenames = []
+  for img_url in img_urls:
+    filename = 'img' + str(index) + '.jpg'
+    print 'Retrieving... ', img_url
+    urllib.urlretrieve(img_url, dest_dir + '/' + filename)
+    index += 1
+    filenames.append(filename)
+  index_file_content = create_index_content(filenames)
+  f = open(dest_dir + '/index.html', 'w')
+  f.write(index_file_content)
+
 
 def main():
   args = sys.argv[1:]
