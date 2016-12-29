@@ -68,6 +68,9 @@ def download_images(img_urls, dest_dir):
   
   index = 0
   filenames = []
+  if not os.path.exists(dest_dir):
+    os.makedirs(dest_dir)
+
   for img_url in img_urls:
     filename = 'img' + str(index) + '.jpg'
     print 'Retrieving... ', img_url
@@ -75,8 +78,10 @@ def download_images(img_urls, dest_dir):
     index += 1
     filenames.append(filename)
   index_file_content = create_index_content(filenames)
+  
   f = open(dest_dir + '/index.html', 'w')
   f.write(index_file_content)
+  
 
 
 def main():
